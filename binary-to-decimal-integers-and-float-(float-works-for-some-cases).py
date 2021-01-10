@@ -58,15 +58,12 @@ if (n == "F"):
             whole_list.reverse()
         whole_list.insert(0, 1)
 
-        # aster = '*'
-        # print(aster * 60)
 
         print('The binary number of {0} is:'.format(num), end=" ")
         print(*whole_list, end='')
         print('.', end=' ')
         print(*dec_list)
 
-        # print(aster * 60)
 
     except(ValueError):
         print('Please enter a valid integer number for places')
