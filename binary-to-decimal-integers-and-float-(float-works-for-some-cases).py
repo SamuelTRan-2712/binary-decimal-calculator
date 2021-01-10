@@ -1,57 +1,38 @@
-#function to convert decimal to binary
+# function to convert decimal to binary
 def decimalToBinary(number):
-
     if (number > 1):
         decimalToBinary(number // 2)
-    print(number % 2, end = '')
+    print(number % 2, end='')
 
-# Python program to convert float
-# decimal to binary number
 
-# Function returns octal representation
-def float_bin(number, places):
-    # split() seperates whole number and decimal
-    # part and stores it in two seperate variables
-    whole, dec = str(number).split(".")
-
-    # Convert both whole number and decimal
-    # part from string type to integer type
+def dec2bin(num):
+    """"
+    Function to convert a floating point decimal number to binary number
+    """
+    global whole_list
+    global dec_list
+    whole, dec = str(num).split('.')
     whole = int(whole)
     dec = int(dec)
+    counter = 1
 
-    # Convert the whole number part to it's
-    # respective binary form and remove the
-    # "0b" from it.
-    res = bin(whole).lstrip("0b") + "."
+    while (whole / 2 >= 1):
+        i = int(whole % 2)
+        whole_list.append(i)
+        whole /= 2
 
-    # Iterate the number of times, we want
-    # the number of decimal places to be
-    for x in range(places):
-        # Multiply the decimal value by 2
-        # and seperate the whole number part
-        # and decimal part
-        whole, dec = str((decimal_converter(dec)) * 2).split(".")
-
-        # Convert the decimal part
-        # to integer again
-        dec = int(dec)
-
-        # Keep adding the integer parts
-        # receive to the result variable
-        res += whole
-
-    return res
+    decproduct = dec
+    while (counter <= places):
+        decproduct = decproduct * (10 ** -(len(str(decproduct))))
+        decproduct *= 2
+        decwhole, decdec = str(decproduct).split('.')
+        decwhole = int(decwhole)
+        decdec = int(decdec)
+        dec_list.append(decwhole)
+        decproduct = decdec
+        counter += 1
 
 
-# Function converts the value passed as
-# parameter to it's decimal representation
-def decimal_converter(num):
-    while num > 1:
-        num /= 10
-    return num
-
-
-# Driver Code
 n = input("Enter your choices of converting (enter N for no decimal point and F for decimal places): ")
 if (n == "N"):
     r = int(input("Please input the number in decimal: "))
@@ -62,11 +43,30 @@ if (n == "N"):
     print("The number in decimal is:", int(b, 2))
 
 if (n == "F"):
-    # Take the user input for
-    # the floating point number
-    m = input("Enter your floating point value : ")
-    # Take user input for the number of
-    # decimal places user want result as
-    p = int(input("Enter the number of decimal places of the result : "))
-    print(float_bin(n, places=p))
+    whole_list = []
+    dec_list = []
+    try:
+        num = float(input('Enter a floating point decimal number: '))
 
+    except(ValueError):
+        print('Please enter a valid floating point decimal')
+
+    try:
+        places = int(input('Enter the number of decimal places in the result: '))
+        dec2bin(num)
+        if (len(whole_list) > 1):
+            whole_list.reverse()
+        whole_list.insert(0, 1)
+
+        # aster = '*'
+        # print(aster * 60)
+
+        print('The binary number of {0} is:'.format(num), end=" ")
+        print(*whole_list, end='')
+        print('.', end=' ')
+        print(*dec_list)
+
+        # print(aster * 60)
+
+    except(ValueError):
+        print('Please enter a valid integer number for places')
