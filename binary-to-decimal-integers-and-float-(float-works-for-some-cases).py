@@ -1,17 +1,21 @@
-# function to convert decimal to binary
-def decimalToBinary(number):
-    if (number > 1):
-        decimalToBinary(number // 2)
-    print(number % 2, end='')
+# helper function
+def dec_to_bin_int(dec_num: str) -> str:
+        bin_num = bin(int(dec_num)).replace("0b", "")
+        return bin_num
 
-
-def dec2bin(num):
+# helper function
+def dec_to_bin_float(num: str, places=5) -> str: # default decimal places to 5
     """"
     Function to convert a floating point decimal number to binary number
     """
-    global whole_list
-    global dec_list
+
+    whole_list = []
+    dec_list = []
     whole, dec = str(num).split('.')
+
+    if len(dec) > places:
+        places = len(dec)
+
     whole = int(whole)
     dec = int(dec)
     counter = 1
@@ -32,38 +36,39 @@ def dec2bin(num):
         decproduct = decdec
         counter += 1
 
+    if (len(whole_list) > 1):
+        whole_list.reverse()
+    whole_list.insert(0, 1)
 
-n = input("Enter your choices of converting (enter N for no decimal point and F for decimal places): ")
-if (n == "N"):
-    r = int(input("Please input the number in decimal: "))
-    print("The number in binary is:", end=' ')
-    a = decimalToBinary(r)
-    print(end="\n")
-    b = input("Please enter a binary number: ")
-    print("The number in decimal is:", int(b, 2))
+    # clean up decimal places
+    # e.g: 11.10000 -> 11.1
+    while True:
+        last_ele = dec_list[-1]
+        if last_ele == 0:
+            dec_list.pop()
+        else:
+            break
 
-if (n == "F"):
-    whole_list = []
-    dec_list = []
-    try:
-        num = float(input('Enter a floating point decimal number: '))
+    # convert result to string format
+    whole_list = "".join([str(i) for i in whole_list]) # convert to a string e.g: 101
+    dec_list = "".join([str(i) for i in dec_list]) # convert to a string e.g: 101
+    result = whole_list + '.' + dec_list # join 2 parts
 
-    except(ValueError):
-        print('Please enter a valid floating point decimal')
+    # return result as a string
+    # e.g: 11.1
+    return(result)
 
-    try:
-        places = int(input('Enter the number of decimal places in the result: '))
-        dec2bin(num)
-        if (len(whole_list) > 1):
-            whole_list.reverse()
-        whole_list.insert(0, 1)
-
-
-        print('The binary number of {0} is:'.format(num), end=" ")
-        print(*whole_list, end='')
-        print('.', end=' ')
-        print(*dec_list)
+# main function
+def dec_to_bin(num: str) -> str:
+    if "." in str(num):
+        return dec_to_bin_float(num)
+    else:
+        return dec_to_bin_int(num)
 
 
-    except(ValueError):
-        print('Please enter a valid integer number for places')
+# testing
+print(dec_to_bin(2))
+print(dec_to_bin(3))
+print(dec_to_bin(4))
+print(dec_to_bin(3.5))
+print(dec_to_bin(4.25))
