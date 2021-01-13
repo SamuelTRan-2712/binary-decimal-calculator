@@ -58,6 +58,37 @@ def dec_to_bin_float(num: str, places=5) -> str: # default decimal places to 5
     # e.g: 11.1
     return(result)
 
+
+def bin_to_dec_float(num: str):
+    left_side = ""
+    right_side = ""
+    dec_left_side = 0
+    dec_right_side = 0
+    for x in range(len(num)):
+
+        if (num[x] != '.'):
+            left_side = left_side + num[x]
+        else:
+            right_side = num[x + 1:]
+            break
+
+    for i in range(len(left_side)):
+        if (left_side[i] == '1'):
+            dec_left_side = dec_left_side + 1 * 2 ** (len(left_side) - (i + 1))
+
+        else:
+            pass
+
+    for j in range(len(right_side)):
+        if (right_side[j] == '1'):
+            dec_right_side = dec_right_side + 1 * 2 ** (-(j + 1))
+        else:
+            pass
+
+    return (dec_left_side + dec_right_side)
+
+
+
 # main function
 def dec_to_bin(num: str) -> str:
     if "." in str(num):
@@ -72,3 +103,4 @@ print(dec_to_bin(3))
 print(dec_to_bin(4))
 print(dec_to_bin(3.5))
 print(dec_to_bin(4.25))
+print(bin_to_dec_float("1110.00101"))
