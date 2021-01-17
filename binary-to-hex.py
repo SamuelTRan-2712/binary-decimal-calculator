@@ -9,6 +9,9 @@ def bin_to_hex(bin_num: str) -> object:
 
     # get rid of the '0x' in front
     bin_num = bin_num.replace('0x', '')
+
+    # switch all lower case to upper
+    bin_num = bin_num. upper()
     return bin_num
 
 
