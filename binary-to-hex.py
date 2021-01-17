@@ -55,6 +55,7 @@ def BinaryTo_Hex(bin: str):
     return hex1
 
 
+
 # this is just the function for the inputs to detect if they have the floating point,... but, it doesnt matter, 
 # regardless the function, the code works perfectly 
 def if_function(bin_fking_num: str):
