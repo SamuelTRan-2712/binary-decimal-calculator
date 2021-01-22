@@ -11,7 +11,7 @@ def bin_to_hex(bin_num: str) -> object:
     bin_num = bin_num.replace('0x', '')
 
     # switch all lower case to upper
-    bin_num = bin_num. upper()
+    bin_num = bin_num.upper()
     return bin_num
 
 
@@ -55,8 +55,46 @@ def BinaryTo_Hex(bin: str):
     return hex1
 
 
+def toBin(hex):
+    # initiate all the possible value for hex, which is equivalent to each of the case here
+    bins = {'1': '0001', '2': '0010', '3': '0011', '4': '0100', '5': '0101', '6': '0110', '7': '0111', '8': '1000',
+            '9': '1001',
+            'a': '1010', 'b': '1011', 'c': '1100', 'd': '1101', 'e': '1110', 'f': '1111', '.': '.'}
 
-# this is just the function for the inputs to detect if they have the floating point,... but, it doesnt matter, 
+    # initiate bin as a string with 0 element
+    bin = ''
+
+    # initiate digits as hex number, for exp: a,b,c,d,e,...
+    digits = hex.lower()
+
+    # loop to convert hex to dec
+    for index in range(len(hex)):
+        if index == 0:
+
+            # initiate the substring, which is the first digit in hex value, for example: here I pass 2ab.ef. Then
+            # substring = 0010 here = 2 in hex
+            substring = bins[digits[0]]
+
+            # loop to get rid of redundant 0s, all 0s that are located before the first number '1' doesnt matter and
+            # need to get rid of
+            for subindex in range(len(substring)):
+
+                # this statement actually just add string that dont start with 0 as the value of the first subindex,
+                # after detect to pass over the 0, the substring will start rightover with subindex with the value of 1
+                if substring[subindex] == '1':
+                    # add the original string which is bin = '' with the substring, which is now got rid of redundant
+                    # 0s in the front
+                    bin = bin + substring[subindex:]
+                    break
+        else:
+            # this is after the first digits, just keep adding the rest of the string, which is whatever index input
+            # in hex and being converted to decimal
+            bin = bin + bins[digits[index]]
+
+    return bin
+
+
+# this is just the function for the inputs to detect if they have the floating point,... but, it doesnt matter,
 # regardless the function, the code works perfectly 
 def if_function(bin_fking_num: str):
     if "." in str(bin_fking_num):
@@ -67,3 +105,4 @@ def if_function(bin_fking_num: str):
 
 print(bin_to_hex('11011'))
 print(BinaryTo_Hex('1110101.1'))
+print(toBin('2ab.ef'))
