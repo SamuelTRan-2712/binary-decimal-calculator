@@ -59,4 +59,4 @@ def bindigits(n, bits):
 
 
 print(bindigits(-7, 4))
-print(second_compliment("1001011"))
+print(second_compliment("1001"))
